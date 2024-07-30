@@ -5,9 +5,9 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Curso, Estudiante, Profesor, Entregable
+from .models import Curso, Estudiante, Profesor
 from django.urls import reverse_lazy
-from users.models import Imagen
+
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -45,19 +45,12 @@ class CursoDetailView(LoginRequiredMixin, DetailView):
 
 
 class CursoCreateView(LoginRequiredMixin, CreateView):
-    """
-    Esta clase envía por defecto un formulario al archivo html. Envía los campos indicados en la lista "fields" y podemos hacer uso de dicho formulario bajo la key "form".
-    """
+
 
     model = Curso
     template_name = "AppEntrega3/curso_create.html"
     fields = ["nombre", "camada"]
 
-    # En success_url indicamos la vista que queremos visitar una vez que se genera un curso con éxito. Lo podemos hacer de 2 formas:
-    
-    # Indicando la URL
-    # success_url = "/curso-list/"
-    # Con el reverse_lazy indicamos el nombre de la vista
     success_url = reverse_lazy("CursoList")
 
 
