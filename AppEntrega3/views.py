@@ -7,25 +7,40 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Curso, Estudiante, Profesor
 from django.urls import reverse_lazy
-
-
+from django.http import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-# Dejamos la vista INICIO basada en funciones y visible para todos
+
 def inicio(request):
-    # imagen = Imagen.objects.filter(user=request.user.id)[0]
-    # print(imagen)
-    return render(request, "AppEntrega3/index.html")# , {"url": imagen})
 
+    return render(request, "AppEntrega3/index.html")
 
-# Dejamos una vista basada en funciones que requiere login para mostrar el uso de @login_required
+def busquedaCamada(request):
+    return render(request, "AppEntrega3/busquedaCamada.html")
+
+def buscar(request):
+    # respuesta = f"Estoy buscando la camada nro: {request.GET['camada']}"
+
+    if request.GET["camada"]:
+        
+        camada = request.GET['camada']
+        cursos = Curso.objects.filter(camada__icontains=camada)
+        
+        return render(request, "AppEntrega3/resultadosBusqueda.html", {"cursos":cursos, "camada":camada})
+    
+    else:
+        
+        respuesta = "No enviaste datos"
+
+    return HttpResponse(respuesta)
+
 @login_required
 def about(request):
     return render(request, "AppEntrega3/about.html")
 
 
-# VISTAS BASADAS EN CLASES - CURSOS
+
 class CursoListView(LoginRequiredMixin, ListView):
     model = Curso
     template_name = "AppEntrega3/curso_list.html"
@@ -38,10 +53,10 @@ class CursoDetailView(LoginRequiredMixin, DetailView):
     model = Curso
     template_name = "AppEntrega3/curso_detail.html"
 
-    # login_url = '/users/login/'
+    login_url = '/users/login/'
 
-    # def get_login_url(self):
-    #     return self.login_url
+    def get_login_url(self):
+        return self.login_url
 
 
 class CursoCreateView(LoginRequiredMixin, CreateView):

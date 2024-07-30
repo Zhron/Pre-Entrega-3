@@ -40,11 +40,17 @@ urlpatterns += [
     path('estudiante-delete/<int:pk>/', views.EstudianteDeleteView.as_view(), name="EstudianteDelete"),
 ]
 
-# # Profesores
+# Profesores
 urlpatterns += [
     path('profesor-list/', views.ProfesorListView.as_view(), name="ProfesorList"),
     path('profesor-detail/<int:pk>/', views.ProfesorDetailView.as_view(), name="ProfesorDetail"),
     path('profesor-create/', views.ProfesorCreateView.as_view(), name="ProfesorCreate"),
     path('profesor-update/<int:pk>/', views.ProfesorUpdateView.as_view(), name="ProfesorUpdate"),
     path('profesor-delete/<int:pk>/', views.ProfesorDeleteView.as_view(), name="ProfesorDelete"),
+]
+
+# Busqueda de Camadas
+urlpatterns += [
+    path('busquedaCamada', views.busquedaCamada, name="BusquedaCamada"),
+    path('buscar/', views.buscar),
 ]

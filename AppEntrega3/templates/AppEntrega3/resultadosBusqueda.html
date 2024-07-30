@@ -1,0 +1,23 @@
+{% extends 'AppEntrega3/base.html' %}
+
+{% load static %}
+
+{% block title %} Inicio {% endblock title %}
+
+{% block main %}
+
+<p> Estamos buscando el: {{camada}}</p>
+
+{% if cursos %}
+
+<ul>
+    {% for curso in cursos %}
+        <li> {{curso.nombre}} </li>
+        <li> {{curso.camada}} </li>
+    {% endfor %}
+
+</ul>
+
+{% endif %}
+
+{% endblock main %}
