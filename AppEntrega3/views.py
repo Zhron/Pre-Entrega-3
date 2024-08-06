@@ -1,14 +1,12 @@
 from django.shortcuts import render
 from .models import Curso
 from AppEntrega3.forms import CursoFormulario, BuscaCursoForm
-from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Curso, Estudiante, Profesor
 from django.urls import reverse_lazy
 from django.http import HttpResponse
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 
@@ -35,13 +33,13 @@ def buscar(request):
 
     return HttpResponse(respuesta)
 
-@login_required
+
 def about(request):
     return render(request, "AppEntrega3/about.html")
 
 
 
-class CursoListView(LoginRequiredMixin, ListView):
+class CursoListView(ListView):
     model = Curso
     template_name = "AppEntrega3/curso_list.html"
 
@@ -49,17 +47,12 @@ class CursoListView(LoginRequiredMixin, ListView):
         return super().get(request, *args, **kwargs)
 
 
-class CursoDetailView(LoginRequiredMixin, DetailView):
+class CursoDetailView(DetailView):
     model = Curso
     template_name = "AppEntrega3/curso_detail.html"
 
-    login_url = '/users/login/'
 
-    def get_login_url(self):
-        return self.login_url
-
-
-class CursoCreateView(LoginRequiredMixin, CreateView):
+class CursoCreateView(CreateView):
 
 
     model = Curso
@@ -69,31 +62,31 @@ class CursoCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy("CursoList")
 
 
-class CursoUpdateView(LoginRequiredMixin, UpdateView):
+class CursoUpdateView(UpdateView):
     model = Curso
     success_url = reverse_lazy("CursoList")
     fields = ["nombre", "camada"]
     template_name = "AppEntrega3/curso_update.html"
 
 
-class CursoDeleteView(LoginRequiredMixin, DeleteView):
+class CursoDeleteView(DeleteView):
     model = Curso
     success_url = reverse_lazy("CursoList")
     template_name = 'AppEntrega3/curso_confirm_delete.html'
 
 
 
-class EstudianteListView(LoginRequiredMixin, ListView):
+class EstudianteListView(ListView):
     model = Estudiante
     template_name = "AppEntrega3/estudiante_list.html"
 
 
-class EstudianteDetailView(LoginRequiredMixin, DetailView):
+class EstudianteDetailView(DetailView):
     model = Estudiante
     template_name = "AppEntrega3/estudiante_detail.html"
 
 
-class EstudianteCreateView(LoginRequiredMixin, CreateView):
+class EstudianteCreateView(CreateView):
 
     model = Estudiante
     template_name = "AppEntrega3/estudiante_create.html"
@@ -101,45 +94,45 @@ class EstudianteCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy("EstudianteList")
 
 
-class EstudianteUpdateView(LoginRequiredMixin, UpdateView):
+class EstudianteUpdateView(UpdateView):
     model = Estudiante
     success_url = reverse_lazy("EstudianteList")
     fields = ["nombre", "apellido", "email"]
     template_name = "AppEntrega3/estudiante_update.html"
 
 
-class EstudianteDeleteView(LoginRequiredMixin, DeleteView):
+class EstudianteDeleteView(DeleteView):
     model = Estudiante
     success_url = reverse_lazy("EstudianteList")
     template_name = 'AppEntrega3/estudiante_confirm_delete.html'
 
 
 
-class ProfesorListView(LoginRequiredMixin, ListView):
+class ProfesorListView(ListView):
     model = Profesor
     template_name = "AppEntrega3/profesor_list.html"
 
 
-class ProfesorDetailView(LoginRequiredMixin, DetailView):
+class ProfesorDetailView(DetailView):
     model = Profesor
     template_name = "AppEntrega3/profesor_detail.html"
 
 
-class ProfesorCreateView(LoginRequiredMixin, CreateView):
+class ProfesorCreateView(CreateView):
     model = Profesor
     template_name = "AppEntrega3/profesor_create.html"
     fields = ["nombre", "apellido", "email"]
     success_url = reverse_lazy("ProfesorList")
 
 
-class ProfesorUpdateView(LoginRequiredMixin, UpdateView):
+class ProfesorUpdateView(UpdateView):
     model = Profesor
     success_url = reverse_lazy("ProfesorList")
     fields = ["nombre", "apellido", "email"]
     template_name = "AppEntrega3/profesor_update.html"
 
 
-class ProfesorDeleteView(LoginRequiredMixin, DeleteView):
+class ProfesorDeleteView(DeleteView):
     model = Profesor
     success_url = reverse_lazy("ProfesorList")
     template_name = 'AppEntrega3/profesor_confirm_delete.html'
